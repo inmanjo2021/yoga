@@ -112,7 +112,7 @@ const labelTransition = css`
 
     font-size: ${input.label.font.size.typed}px;
     color: ${dropdown.input.label.color};
-    margin-left: ${dropdown.input.label.margin.left}
+    margin-left: ${dropdown.input.label.margin.left}px;
   `}
 `;
 
@@ -120,6 +120,7 @@ const Input = styled.input`
   ${({
     disabled,
     value,
+    isOpen,
     theme: {
       yoga: {
         transition,
@@ -151,7 +152,19 @@ const Input = styled.input`
       }
     }
 
-    ${value &&
+    ${value || isOpen
+      ? css`
+          & ~ legend {
+            max-width: 1000px;
+          }
+
+          & ~ label {
+            ${labelTransition};
+          }
+        `
+      : ''}
+
+    ${isOpen &&
       css`
         & ~ legend {
           max-width: 1000px;
@@ -342,6 +355,7 @@ const Dropdown = ({
             disabled={disabled}
             selected={selectedItem !== null}
             {...getInputProps()}
+            isOpen={isOpen}
           />
           <Label error={error} disabled={disabled}>
             {label}
