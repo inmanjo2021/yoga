@@ -357,7 +357,7 @@ const Dropdown = ({
             {...getInputProps()}
             isOpen={isOpen}
           />
-          <Label error={error} disabled={disabled}>
+          <Label error={error} disabled={disabled} data-testid="label">
             {label}
           </Label>
 
